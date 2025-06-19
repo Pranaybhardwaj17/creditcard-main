@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>💳 Credit Card Advisor</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .chat-container {
+        width: 100%;
+        max-width: 600px;
+        height: 90vh;
+        background: white;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .chat-header {
+        background-color: #2a63f1;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 10px 10px 0 0;
+      }
+
+      .chat-box {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .message {
+        max-width: 75%;
+        padding: 12px 15px;
+        border-radius: 12px;
+        line-height: 1.4;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .assistant {
+        align-self: flex-start;
+        background-color: #e6f0ff;
+        color: #1a3fc1;
+        border-bottom-left-radius: 0;
+      }
+
+      .user {
+        align-self: flex-end;
+        background-color: #d0f0ce;
+        color: #1c501c;
+        border-bottom-right-radius: 0;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .chat-input {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #ddd;
+      }
+
+      .chat-input input[type="text"] {
+        flex-grow: 1;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-right: 10px;
+      }
+
+      .chat-input input[type="submit"] {
+        padding: 12px 16px;
+        background-color: #2a63f1;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .chat-input input[type="submit"]:hover {
+        background-color: #1a4edb;
+      }
+
+      .summary-button {
+        padding: 12px;
+        text-align: center;
+        border-top: 1px solid #eee;
+      }
+
+      .summary-button form {
+        margin: 0;
+      }
+
+      .summary-button button {
+        background-color: #1e90ff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .summary-button button:hover {
+        background-color: #0073e6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <div class="chat-header">💬 Credit Card Advisor</div>
+
+      <div class="chat-box" id="chat-box">
+        {% for entry in history %}
+        <div class="message {{ entry.role }}">{{ entry.text }}</div>
+        {% endfor %} {% if response %}
+        <div class="message assistant">{{ response }}</div>
+        {% endif %}
+      </div>
+
+      <form method="post" class="chat-input">
+        <input
+          type="text"
+          name="message"
+          placeholder="Type your answer..."
+          required
+          autofocus
+        />
+        <input type="submit" value="Send" />
+      </form>
+
+      <div class="summary-button">
+        <form method="post" action="/summary">
+          <button type="submit">📊 Finish & See Recommendations</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Auto-scroll to bottom on load
+      const chatBox = document.getElementById("chat-box");
+      chatBox.scrollTop = chatBox.scrollHeight;
+    </script>
+  </body>
+</html>

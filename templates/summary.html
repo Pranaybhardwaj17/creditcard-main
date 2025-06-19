@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Credit Card Matches</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+      padding: 30px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .card {
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.02);
+    }
+    .card img {
+      width: 160px;
+      border-radius: 8px;
+      margin-right: 20px;
+    }
+    .card-content h2 {
+      margin: 0;
+      color: #2a63f1;
+    }
+    .card-content p {
+      margin: 6px 0;
+    }
+    .perks {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+    .btn {
+      margin-top: 30px;
+      display: inline-block;
+      background: #2a63f1;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎉 Top Credit Card Recommendations</h1>
+
+    {% for card in cards %}
+      <div class="card">
+        <img src="{{ card.image_url }}" alt="{{ card.name }}">
+        <div class="card-content">
+          <h2>{{ card.name }} ({{ card.issuer }})</h2>
+          <p><strong>Annual Fee:</strong> ₹{{ card.annual_fee }}</p>
+          <p><strong>Reward Rate:</strong> {{ card.reward_rate }}% {{ card.reward_type }}</p>
+          <p><strong>Categories:</strong> {{ card.categories | join(", ") }}</p>
+          <p><strong>Eligibility:</strong> ₹{{ card.eligibility.min_income }} income, Credit Score ≥ {{ card.eligibility.credit_score }}</p>
+          <p><strong>Perks:</strong></p>
+          <ul class="perks">
+            {% for perk in card.perks %}
+              <li>{{ perk }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endfor %}
+
+    <a class="btn" href="/reset">🔁 Restart Questionnaire</a>
+  </div>
+</body>
+</html>
